@@ -1,6 +1,7 @@
 .idea
 build
 code-coverage
-vendor
 composer.phar
 composer.lock
+index.php
+vendor
