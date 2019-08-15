@@ -12,69 +12,69 @@ use Xicrow\PhpSimpleDb\QueryBuilder\Exception\UnknownAliasException;
  */
 class Manager
 {
-    /**
-     * @var QueryBuilderInterface[]
-     */
-    private $queryBuilders = [];
+	/**
+	 * @var QueryBuilderInterface[]
+	 */
+	private $queryBuilders = [];
 
-    /**
-     * @param string $alias
-     * @param array  $config
-     *
-     * @return Manager
-     * @throws UnknownAdapterException
-     */
-    public function add(string $alias, array $config): Manager
-    {
-        $config = array_merge([
-            'adapter' => null,
-        ], $config);
+	/**
+	 * @param string $alias
+	 * @param array  $config
+	 *
+	 * @return Manager
+	 * @throws UnknownAdapterException
+	 */
+	public function add(string $alias, array $config): Manager
+	{
+		$config = array_merge([
+			'adapter' => null,
+		], $config);
 
-        $queryBuilder = false;
-        switch (strtolower($config['adapter'])) {
-            case 'mysql':
-                $queryBuilder = new MySQL();
-            break;
-        }
+		$queryBuilder = false;
+		switch (strtolower($config['adapter'])) {
+			case 'mysql':
+				$queryBuilder = new MySQL();
+			break;
+		}
 
-        if (!$queryBuilder) {
-            throw new UnknownAdapterException('The given adapter "' . $config['adapter'] . '" is invalid');
-        }
+		if (!$queryBuilder) {
+			throw new UnknownAdapterException('The given adapter "' . $config['adapter'] . '" is invalid');
+		}
 
-        $this->queryBuilders[$alias] = $queryBuilder;
+		$this->queryBuilders[$alias] = $queryBuilder;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * @param string $alias
-     *
-     * @return QueryBuilderInterface
-     * @throws UnknownAliasException
-     */
-    public function get(string $alias): QueryBuilderInterface
-    {
-        if (!array_key_exists($alias, $this->queryBuilders)) {
-            throw new UnknownAliasException('No query builder found with alias "' . $alias . '"');
-        }
+	/**
+	 * @param string $alias
+	 *
+	 * @return QueryBuilderInterface
+	 * @throws UnknownAliasException
+	 */
+	public function get(string $alias): QueryBuilderInterface
+	{
+		if (!array_key_exists($alias, $this->queryBuilders)) {
+			throw new UnknownAliasException('No query builder found with alias "' . $alias . '"');
+		}
 
-        return $this->queryBuilders[$alias];
-    }
+		return $this->queryBuilders[$alias];
+	}
 
-    /**
-     * @param string $alias
-     *
-     * @return Manager
-     * @throws UnknownAliasException
-     */
-    public function remove(string $alias): Manager
-    {
-        if (!array_key_exists($alias, $this->queryBuilders)) {
-            throw new UnknownAliasException('No query builder found with alias "' . $alias . '"');
-        }
+	/**
+	 * @param string $alias
+	 *
+	 * @return Manager
+	 * @throws UnknownAliasException
+	 */
+	public function remove(string $alias): Manager
+	{
+		if (!array_key_exists($alias, $this->queryBuilders)) {
+			throw new UnknownAliasException('No query builder found with alias "' . $alias . '"');
+		}
 
-        unset($this->queryBuilders[$alias]);
+		unset($this->queryBuilders[$alias]);
 
-        return $this;
-    }
+		return $this;
+	}
 }

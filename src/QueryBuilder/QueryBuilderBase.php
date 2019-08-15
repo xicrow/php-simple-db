@@ -8,132 +8,132 @@ namespace Xicrow\PhpSimpleDb\QueryBuilder;
  */
 abstract class QueryBuilderBase implements QueryBuilderInterface
 {
-    /**
-     * @var array
-     */
-    protected $parts = [
-        'select' => [],
-        'from'   => [],
-        'join'   => [],
-        'where'  => [],
-        'group'  => [],
-        'having' => [],
-        'order'  => [],
-        'offset' => null,
-        'limit'  => null,
-    ];
+	/**
+	 * @var array
+	 */
+	protected $parts = [
+		'select' => [],
+		'from'   => [],
+		'join'   => [],
+		'where'  => [],
+		'group'  => [],
+		'having' => [],
+		'order'  => [],
+		'offset' => null,
+		'limit'  => null,
+	];
 
-    /**
-     * @var string
-     */
-    protected $sql = '';
+	/**
+	 * @var string
+	 */
+	protected $sql = '';
 
-    /**
-     * @var array
-     */
-    protected $parameters = [];
+	/**
+	 * @var array
+	 */
+	protected $parameters = [];
 
-    /**
-     * @inheritdoc
-     */
-    public function __construct(array $parts = [])
-    {
-        $this->parts = array_merge($this->parts, $parts);
-    }
+	/**
+	 * @inheritdoc
+	 */
+	public function __construct(array $parts = [])
+	{
+		$this->parts = array_merge($this->parts, $parts);
+	}
 
-    /**
-     * @inheritdoc
-     */
-    public function getSql(): string
-    {
-        return $this->sql;
-    }
+	/**
+	 * @inheritdoc
+	 */
+	public function getSql(): string
+	{
+		return $this->sql;
+	}
 
-    /**
-     * @inheritdoc
-     */
-    public function getParameters(): array
-    {
-        return $this->parameters;
-    }
+	/**
+	 * @inheritdoc
+	 */
+	public function getParameters(): array
+	{
+		return $this->parameters;
+	}
 
-    /**
-     * @inheritdoc
-     */
-    public function select(array $selects)
-    {
-        $this->parts['select'] = array_merge($this->parts['select'], $selects);
+	/**
+	 * @inheritdoc
+	 */
+	public function select(array $selects)
+	{
+		$this->parts['select'] = array_merge($this->parts['select'], $selects);
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * @inheritdoc
-     */
-    public function from(array $froms)
-    {
-        $this->parts['from'] = array_merge($this->parts['from'], $froms);
+	/**
+	 * @inheritdoc
+	 */
+	public function from(array $froms)
+	{
+		$this->parts['from'] = array_merge($this->parts['from'], $froms);
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * @inheritdoc
-     */
-    public function join(array $joins)
-    {
-        $this->parts['join'] = array_merge($this->parts['join'], $joins);
+	/**
+	 * @inheritdoc
+	 */
+	public function join(array $joins)
+	{
+		$this->parts['join'] = array_merge($this->parts['join'], $joins);
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * @inheritdoc
-     */
-    public function where(array $wheres)
-    {
-        $this->parts['where'] = array_merge($this->parts['where'], $wheres);
+	/**
+	 * @inheritdoc
+	 */
+	public function where(array $wheres)
+	{
+		$this->parts['where'] = array_merge($this->parts['where'], $wheres);
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * @inheritdoc
-     */
-    public function group(array $groups)
-    {
-        $this->parts['group'] = array_merge($this->parts['group'], $groups);
+	/**
+	 * @inheritdoc
+	 */
+	public function group(array $groups)
+	{
+		$this->parts['group'] = array_merge($this->parts['group'], $groups);
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * @inheritdoc
-     */
-    public function order(array $orders)
-    {
-        $this->parts['order'] = array_merge($this->parts['order'], $orders);
+	/**
+	 * @inheritdoc
+	 */
+	public function order(array $orders)
+	{
+		$this->parts['order'] = array_merge($this->parts['order'], $orders);
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * @inheritdoc
-     */
-    public function offset(int $offset)
-    {
-        $this->parts['offset'] = $offset;
+	/**
+	 * @inheritdoc
+	 */
+	public function offset(int $offset)
+	{
+		$this->parts['offset'] = $offset;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * @inheritdoc
-     */
-    public function limit(int $limit)
-    {
-        $this->parts['limit'] = $limit;
+	/**
+	 * @inheritdoc
+	 */
+	public function limit(int $limit)
+	{
+		$this->parts['limit'] = $limit;
 
-        return $this;
-    }
+		return $this;
+	}
 }

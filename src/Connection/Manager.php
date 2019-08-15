@@ -12,69 +12,69 @@ use Xicrow\PhpSimpleDb\Connection\Exception\UnknownAliasException;
  */
 class Manager
 {
-    /**
-     * @var ConnectionInterface[]
-     */
-    private $connections = [];
+	/**
+	 * @var ConnectionInterface[]
+	 */
+	private $connections = [];
 
-    /**
-     * @param string $alias
-     * @param array  $config
-     *
-     * @return Manager
-     * @throws UnknownAdapterException
-     */
-    public function add(string $alias, array $config): Manager
-    {
-        $config = array_merge([
-            'adapter' => null,
-        ], $config);
+	/**
+	 * @param string $alias
+	 * @param array  $config
+	 *
+	 * @return Manager
+	 * @throws UnknownAdapterException
+	 */
+	public function add(string $alias, array $config): Manager
+	{
+		$config = array_merge([
+			'adapter' => null,
+		], $config);
 
-        $connection = false;
-        switch (strtolower($config['adapter'])) {
-            case 'mysql':
-                $connection = new MySQL($config);
-            break;
-        }
+		$connection = false;
+		switch (strtolower($config['adapter'])) {
+			case 'mysql':
+				$connection = new MySQL($config);
+			break;
+		}
 
-        if (!$connection) {
-            throw new UnknownAdapterException('The given adapter "' . $config['adapter'] . '" is invalid');
-        }
+		if (!$connection) {
+			throw new UnknownAdapterException('The given adapter "' . $config['adapter'] . '" is invalid');
+		}
 
-        $this->connections[$alias] = $connection;
+		$this->connections[$alias] = $connection;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * @param string $alias
-     *
-     * @return ConnectionInterface
-     * @throws UnknownAliasException
-     */
-    public function get(string $alias): ConnectionInterface
-    {
-        if (!array_key_exists($alias, $this->connections)) {
-            throw new UnknownAliasException('No connection found with alias "' . $alias . '"');
-        }
+	/**
+	 * @param string $alias
+	 *
+	 * @return ConnectionInterface
+	 * @throws UnknownAliasException
+	 */
+	public function get(string $alias): ConnectionInterface
+	{
+		if (!array_key_exists($alias, $this->connections)) {
+			throw new UnknownAliasException('No connection found with alias "' . $alias . '"');
+		}
 
-        return $this->connections[$alias];
-    }
+		return $this->connections[$alias];
+	}
 
-    /**
-     * @param string $alias
-     *
-     * @return Manager
-     * @throws UnknownAliasException
-     */
-    public function remove(string $alias): Manager
-    {
-        if (!array_key_exists($alias, $this->connections)) {
-            throw new UnknownAliasException('No connection found with alias "' . $alias . '"');
-        }
+	/**
+	 * @param string $alias
+	 *
+	 * @return Manager
+	 * @throws UnknownAliasException
+	 */
+	public function remove(string $alias): Manager
+	{
+		if (!array_key_exists($alias, $this->connections)) {
+			throw new UnknownAliasException('No connection found with alias "' . $alias . '"');
+		}
 
-        unset($this->connections[$alias]);
+		unset($this->connections[$alias]);
 
-        return $this;
-    }
+		return $this;
+	}
 }
