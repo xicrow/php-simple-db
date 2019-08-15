@@ -14,7 +14,7 @@ interface QueryBuilderInterface
 	public function __construct(array $parts = []);
 
 	/**
-	 * @return $this
+	 * @return static
 	 */
 	public function execute();
 
@@ -36,56 +36,56 @@ interface QueryBuilderInterface
 	/**
 	 * @param array $selects
 	 *
-	 * @return $this
+	 * @return static
 	 */
 	public function select(array $selects);
 
 	/**
-	 * @param string $from
+	 * @param array $froms
 	 *
-	 * @return mixed
+	 * @return static
 	 */
 	public function from(array $froms);
 
 	/**
 	 * @param array $joins
 	 *
-	 * @return mixed
+	 * @return static
 	 */
 	public function join(array $joins);
 
 	/**
 	 * @param array $wheres
 	 *
-	 * @return mixed
+	 * @return static
 	 */
 	public function where(array $wheres);
 
 	/**
 	 * @param array $groups
 	 *
-	 * @return mixed
+	 * @return static
 	 */
 	public function group(array $groups);
 
 	/**
 	 * @param array $orders
 	 *
-	 * @return mixed
+	 * @return static
 	 */
 	public function order(array $orders);
 
 	/**
 	 * @param int $offset
 	 *
-	 * @return mixed
+	 * @return static
 	 */
 	public function offset(int $offset);
 
 	/**
 	 * @param int $limit
 	 *
-	 * @return mixed
+	 * @return static
 	 */
 	public function limit(int $limit);
 }

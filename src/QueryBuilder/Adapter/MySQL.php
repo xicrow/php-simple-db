@@ -163,7 +163,7 @@ class MySQL extends QueryBuilderBase
 	 *
 	 * @return string
 	 */
-	private function getWhereArrayAsSql(string $prefix, array $where): string
+	protected function getWhereArrayAsSql(string $prefix, array $where): string
 	{
 		$sql = '';
 		if (!empty($where)) {
@@ -241,7 +241,7 @@ class MySQL extends QueryBuilderBase
 	 *
 	 * @return string
 	 */
-	private function escapeAlias(string $alias): string
+	protected function escapeAlias(string $alias): string
 	{
 		if (strpos($alias, '`') === false) {
 			$alias = '`' . $alias . '`';
@@ -255,7 +255,7 @@ class MySQL extends QueryBuilderBase
 	 *
 	 * @return string
 	 */
-	private function escapeField(string $field): string
+	protected function escapeField(string $field): string
 	{
 		if (strpos($field, '`') === false) {
 			if (strpos($field, '.') === false && strpos($field, ' ') === false) {
@@ -279,7 +279,7 @@ class MySQL extends QueryBuilderBase
 	 *
 	 * @return string
 	 */
-	private function escapeTable(string $table): string
+	protected function escapeTable(string $table): string
 	{
 		if (strpos($table, '`') === false) {
 			$table = '`' . $table . '`';
