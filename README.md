@@ -3,15 +3,7 @@ Simple database manager for PHP
 
 ## Installation
 The recommended way to install is through [Composer](https://getcomposer.org/).
-```JSON
-{
-    "require": {
-        "xicrow/php-simple-db": "~1.0"
-    }
-}
 ```
-
-```BASH
 composer require xicrow/php-simple-db
 ```
 
