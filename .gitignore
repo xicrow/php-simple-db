@@ -3,5 +3,4 @@ build
 code-coverage
 composer.phar
 composer.lock
-index.php
 vendor
