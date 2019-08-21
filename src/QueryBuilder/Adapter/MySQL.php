@@ -171,7 +171,7 @@ class MySQL extends QueryBuilderBase
 
 			$i = 0;
 			foreach ($where as $field => $value) {
-				if (is_callable($value)) {
+				if (!is_scalar($value) && is_callable($value)) {
 					$result = $value();
 					if (empty($result) || !is_array($result)) {
 						continue;
