@@ -163,7 +163,7 @@ class MySQL extends QueryBuilderBase
 	 *
 	 * @return string
 	 */
-	protected function getWhereArrayAsSql(string $prefix, array $where): string
+	protected function getWhereArrayAsSql(string $prefix, array $where, string $type = 'AND', int $indent = 0): string
 	{
 		$sql = '';
 		if (!empty($where)) {
@@ -180,10 +180,31 @@ class MySQL extends QueryBuilderBase
 					$value = current($result);
 				}
 
+				if (is_array($value) && count($value) === 0) {
+					continue;
+				}
+
+				$sql .= "\n";
+				$sql .= str_repeat("\t", ($indent + 1));
 				if ($i > 0) {
+					$sql .= $type . ' ';
+				}
+
+				if (is_numeric($field) && is_array($value)) {
+					$field = 'AND';
+				}
+				if (in_array($field, ['AND', 'OR']) && is_array($value) && count($value) > 0) {
 					$sql .= "\n";
-					$sql .= "\t";
-					$sql .= 'AND ';
+					$sql .= str_repeat("\t", ($indent + 1));
+					$sql .= '(';
+					$sql .= $this->getWhereArrayAsSql('', $value, $field, ($indent + 1));
+					$sql .= "\n";
+					$sql .= str_repeat("\t", ($indent + 1));
+					$sql .= ')';
+
+					$i++;
+
+					continue;
 				}
 
 				if (is_numeric($field)) {
@@ -200,7 +221,7 @@ class MySQL extends QueryBuilderBase
 
 					$placeholders = [];
 					foreach ($value as $data) {
-						$placeholder = ':p' . count($this->parameters);
+						$placeholder = $this->getPlaceholder($data);
 
 						$placeholders[] = $placeholder;
 
@@ -218,7 +239,7 @@ class MySQL extends QueryBuilderBase
 						unset($tmp);
 					}
 
-					$placeholder = ':p' . count($this->parameters);
+					$placeholder = $this->getPlaceholder($value);
 
 					$sql .= $this->escapeField($field) . ' ' . $comparator . ' ' . $placeholder;
 
@@ -234,6 +255,19 @@ class MySQL extends QueryBuilderBase
 		}
 
 		return $sql;
+	}
+
+	/**
+	 * @param mixed $value
+	 * @return string
+	 */
+	protected function getPlaceholder($value): string
+	{
+		$placeholder = ':';
+		$placeholder .= substr(gettype($value), 0, 3);
+		$placeholder .= str_pad(count($this->parameters), 4, '0', STR_PAD_LEFT);
+
+		return $placeholder;
 	}
 
 	/**

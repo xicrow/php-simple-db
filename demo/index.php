@@ -65,6 +65,14 @@ $queryBuilder->select([
 	'TABLES.TABLE_SCHEMA'  => 'mysql',
 	'TABLES.ENGINE'        => ['CSV', 'InnoDB', 'MyISAM'],
 	'TABLES.TABLE_ROWS >=' => 0,
+	'AND'                  => [
+		'TABLES.TABLE_ROWS >=' => 1,
+		'TABLES.TABLE_ROWS <=' => 100,
+	],
+	'OR'                   => [
+		'TABLES.TABLE_ROWS >=' => 1,
+		'TABLES.TABLE_ROWS <=' => 100,
+	],
 ])->group([
 	'TABLES.TABLE_SCHEMA',
 	'TABLES.TABLE_NAME',
@@ -72,6 +80,9 @@ $queryBuilder->select([
 	'TABLES.TABLE_SCHEMA' => 'ASC',
 	'TABLES.TABLE_NAME'   => 'ASC',
 ])->offset(0)->limit(50)->execute();
+//echo '<pre>' . $queryBuilder->render() . '</pre>';
+//echo '<pre>' . print_r($queryBuilder->getParameters(), true) . '</pre>';
+//exit;
 
 try {
 	$statement = $connection->pdo()->prepare($queryBuilder->getSql());
