@@ -24,9 +24,9 @@ class MySQL extends QueryBuilderBase
 			foreach ($this->parts['select'] as $alias => $field) {
 				if ($i > 0) {
 					$this->sql .= ',';
-					$this->sql .= "\n";
-					$this->sql .= "\t";
 				}
+				$this->sql .= "\n";
+				$this->sql .= "\t";
 				if (is_numeric($alias)) {
 					$this->sql .= $this->escapeField($field);
 				} else {
@@ -46,6 +46,8 @@ class MySQL extends QueryBuilderBase
 				if ($i > 0) {
 					$this->sql .= ', ';
 				}
+				$this->sql .= "\n";
+				$this->sql .= "\t";
 				if (is_numeric($alias)) {
 					$this->sql .= $this->escapeTable($table);
 				} else {
@@ -90,18 +92,22 @@ class MySQL extends QueryBuilderBase
 		}
 		if (!empty($this->parts['group'])) {
 			$this->sql .= "\n";
-			$this->sql .= 'GROUP BY ';
+			$this->sql .= 'GROUP BY';
 			$i         = 0;
 			foreach ($this->parts['group'] as $field) {
 				if ($i > 0) {
 					$this->sql .= ',';
-					$this->sql .= "\n";
-					$this->sql .= "\t";
 				}
+				$this->sql .= "\n";
+				$this->sql .= "\t";
 				$this->sql .= $this->escapeField($field);
 
 				$i++;
 			}
+		}
+		if (!empty($this->parts['having'])) {
+			$this->sql .= "\n";
+			$this->sql .= self::getWhereArrayAsSql('HAVING ', $this->parts['having']);
 		}
 		if (!empty($this->parts['order'])) {
 			$this->sql .= "\n";
@@ -110,9 +116,9 @@ class MySQL extends QueryBuilderBase
 			foreach ($this->parts['order'] as $field => $direction) {
 				if ($i > 0) {
 					$this->sql .= ',';
-					$this->sql .= "\n";
-					$this->sql .= "\t";
 				}
+				$this->sql .= "\n";
+				$this->sql .= "\t";
 				if (is_numeric($field)) {
 					$this->sql .= $this->escapeField($direction);
 				} else {
