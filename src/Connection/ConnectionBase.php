@@ -1,19 +1,13 @@
 <?php
+declare(strict_types=1);
+
 namespace Xicrow\PhpSimpleDb\Connection;
 
 use PDO;
 
-/**
- * Class ConnectionBase
- *
- * @package Xicrow\PhpSimpleDb\Connection
- */
 abstract class ConnectionBase implements ConnectionInterface
 {
-	/**
-	 * @var array
-	 */
-	protected $config = [
+	protected array $config = [
 		'host'        => null,
 		'port'        => null,
 		'unix_socket' => null,
@@ -27,14 +21,8 @@ abstract class ConnectionBase implements ConnectionInterface
 		'charset'     => null,
 	];
 
-	/**
-	 * @var PDO
-	 */
-	protected $pdo = null;
+	protected PDO|null $pdo = null;
 
-	/**
-	 * @param array $config
-	 */
 	public function __construct(array $config = [])
 	{
 		if (!empty($config)) {
@@ -42,11 +30,6 @@ abstract class ConnectionBase implements ConnectionInterface
 		}
 	}
 
-	/**
-	 * @param array $config
-	 *
-	 * @return ConnectionInterface
-	 */
 	public function initialize(array $config): ConnectionInterface
 	{
 		$this->config = array_merge($this->config, $config);
@@ -54,17 +37,11 @@ abstract class ConnectionBase implements ConnectionInterface
 		return $this;
 	}
 
-	/**
-	 * @return array
-	 */
 	public function config(): array
 	{
 		return $this->config;
 	}
 
-	/**
-	 * @return PDO
-	 */
 	public function pdo(): PDO
 	{
 		return $this->pdo;

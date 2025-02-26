@@ -1,27 +1,18 @@
 <?php
+declare(strict_types=1);
+
 namespace Xicrow\PhpSimpleDb\Connection;
 
 use Xicrow\PhpSimpleDb\Connection\Adapter\MySQL;
 use Xicrow\PhpSimpleDb\Connection\Exception\UnknownAdapterException;
 use Xicrow\PhpSimpleDb\Connection\Exception\UnknownAliasException;
 
-/**
- * Class Manager
- *
- * @package Xicrow\PhpSimpleDb\Connection
- */
 class Manager
 {
-	/**
-	 * @var ConnectionInterface[]
-	 */
-	private $connections = [];
+	/** @phpstan-var ConnectionInterface[] */
+	private array $connections = [];
 
 	/**
-	 * @param string $alias
-	 * @param array  $config
-	 *
-	 * @return Manager
 	 * @throws UnknownAdapterException
 	 */
 	public function add(string $alias, array $config): Manager
@@ -31,10 +22,8 @@ class Manager
 		], $config);
 
 		$connection = false;
-		switch (strtolower($config['adapter'])) {
-			case 'mysql':
-				$connection = new MySQL($config);
-			break;
+		if (strtolower($config['adapter']) == 'mysql') {
+			$connection = new MySQL($config);
 		}
 
 		if (!$connection) {
@@ -47,9 +36,6 @@ class Manager
 	}
 
 	/**
-	 * @param string $alias
-	 *
-	 * @return ConnectionInterface
 	 * @throws UnknownAliasException
 	 */
 	public function get(string $alias): ConnectionInterface
@@ -62,9 +48,6 @@ class Manager
 	}
 
 	/**
-	 * @param string $alias
-	 *
-	 * @return Manager
 	 * @throws UnknownAliasException
 	 */
 	public function remove(string $alias): Manager

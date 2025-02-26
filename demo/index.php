@@ -1,6 +1,9 @@
 <?php
+declare(strict_types=1);
+
 require_once('../vendor/autoload.php');
 
+use Xicrow\PhpSimpleDb\Connection\Adapter\MySQL;
 use Xicrow\PhpSimpleDb\Connection\Manager as ConnectionManager;
 use Xicrow\PhpSimpleDb\QueryBuilder\Adapter\MySQL as QueryBuilderMySQL;
 use Xicrow\PhpSimpleDb\QueryBuilder\Manager as QueryBuilderManager;
@@ -8,7 +11,7 @@ use Xicrow\PhpSimpleDb\QueryBuilder\Manager as QueryBuilderManager;
 /**
  * Add and get a new connection, through the connection manager
  *
- * @var \Xicrow\PhpSimpleDb\Connection\Adapter\MySQL $connection
+ * @var MySQL $connection
  */
 $connectionManager = new ConnectionManager();
 $connectionManager->add('test', [

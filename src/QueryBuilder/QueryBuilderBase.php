@@ -1,17 +1,11 @@
 <?php
+declare(strict_types=1);
+
 namespace Xicrow\PhpSimpleDb\QueryBuilder;
 
-/**
- * Class QueryBuilderBase
- *
- * @package Xicrow\PhpSimpleDb\QueryBuilder
- */
 abstract class QueryBuilderBase implements QueryBuilderInterface
 {
-	/**
-	 * @var array
-	 */
-	protected $parts = [
+	protected array  $parts      = [
 		'select' => [],
 		'from'   => [],
 		'join'   => [],
@@ -22,115 +16,74 @@ abstract class QueryBuilderBase implements QueryBuilderInterface
 		'offset' => null,
 		'limit'  => null,
 	];
+	protected string $sql        = '';
+	protected array  $parameters = [];
 
-	/**
-	 * @var string
-	 */
-	protected $sql = '';
-
-	/**
-	 * @var array
-	 */
-	protected $parameters = [];
-
-	/**
-	 * @inheritdoc
-	 */
 	public function __construct(array $parts = [])
 	{
 		$this->parts = array_merge($this->parts, $parts);
 	}
 
-	/**
-	 * @inheritdoc
-	 */
 	public function getSql(): string
 	{
 		return $this->sql;
 	}
 
-	/**
-	 * @inheritdoc
-	 */
 	public function getParameters(): array
 	{
 		return $this->parameters;
 	}
 
-	/**
-	 * @inheritdoc
-	 */
-	public function select(array $selects)
+	public function select(array $selects): static
 	{
 		$this->parts['select'] = array_merge($this->parts['select'], $selects);
 
 		return $this;
 	}
 
-	/**
-	 * @inheritdoc
-	 */
-	public function from(array $froms)
+	public function from(array $froms): static
 	{
 		$this->parts['from'] = array_merge($this->parts['from'], $froms);
 
 		return $this;
 	}
 
-	/**
-	 * @inheritdoc
-	 */
-	public function join(array $joins)
+	public function join(array $joins): static
 	{
 		$this->parts['join'] = array_merge($this->parts['join'], $joins);
 
 		return $this;
 	}
 
-	/**
-	 * @inheritdoc
-	 */
-	public function where(array $wheres)
+	public function where(array $wheres): static
 	{
 		$this->parts['where'] = array_merge($this->parts['where'], $wheres);
 
 		return $this;
 	}
 
-	/**
-	 * @inheritdoc
-	 */
-	public function group(array $groups)
+	public function group(array $groups): static
 	{
 		$this->parts['group'] = array_merge($this->parts['group'], $groups);
 
 		return $this;
 	}
 
-	/**
-	 * @inheritdoc
-	 */
-	public function order(array $orders)
+	public function order(array $orders): static
 	{
 		$this->parts['order'] = array_merge($this->parts['order'], $orders);
 
 		return $this;
 	}
 
-	/**
-	 * @inheritdoc
-	 */
-	public function offset(int $offset)
+	public function offset(int $offset): static
 	{
 		$this->parts['offset'] = $offset;
 
 		return $this;
 	}
 
-	/**
-	 * @inheritdoc
-	 */
-	public function limit(int $limit)
+	public function limit(int $limit): static
 	{
 		$this->parts['limit'] = $limit;
 

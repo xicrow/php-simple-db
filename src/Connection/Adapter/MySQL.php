@@ -1,22 +1,14 @@
 <?php
+declare(strict_types=1);
+
 namespace Xicrow\PhpSimpleDb\Connection\Adapter;
 
 use Pdo;
 use Xicrow\PhpSimpleDb\Connection\ConnectionBase;
 use Xicrow\PhpSimpleDb\Connection\ConnectionInterface;
 
-/**
- * Class MySQL
- *
- * @package Xicrow\PhpSimpleDb\Connection\Adapter
- */
 class MySQL extends ConnectionBase
 {
-	/**
-	 * @param array $config
-	 *
-	 * @return ConnectionInterface
-	 */
 	public function initialize(array $config): ConnectionInterface
 	{
 		parent::initialize($config);

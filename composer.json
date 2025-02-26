@@ -1,29 +1,29 @@
 {
-	"name"        : "xicrow/php-simple-db",
-	"description" : "Simple database manager for PHP",
-	"type"        : "library",
-	"keywords"    : [
+	"name": "xicrow/php-simple-db",
+	"description": "Simple database manager for PHP",
+	"type": "library",
+	"keywords": [
 		"database",
 		"pdo",
 		"php"
 	],
-	"license"     : "MIT",
-	"authors"     : [
+	"license": "MIT",
+	"authors": [
 		{
-			"name"    : "Jan Ebsen",
-			"email"   : "xicrow@gmail.com",
+			"name": "Jan Ebsen",
+			"email": "xicrow@gmail.com",
 			"homepage": "https://jan-ebsen.dk/",
-			"role"    : "developer"
+			"role": "developer"
 		}
 	],
-	"support"     : {
+	"support": {
 		"issues": "https://github.com/xicrow/php-simple-db/issues"
 	},
-	"require"     : {
-		"php"    : "^7.0",
+	"require": {
+		"php": "~8.0",
 		"ext-pdo": "*"
 	},
-	"autoload"    : {
+	"autoload": {
 		"psr-4": {
 			"Xicrow\\PhpSimpleDb\\": "src"
 		}

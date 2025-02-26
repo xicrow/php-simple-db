@@ -1,27 +1,18 @@
 <?php
+declare(strict_types=1);
+
 namespace Xicrow\PhpSimpleDb\QueryBuilder;
 
 use Xicrow\PhpSimpleDb\QueryBuilder\Adapter\MySQL;
 use Xicrow\PhpSimpleDb\QueryBuilder\Exception\UnknownAdapterException;
 use Xicrow\PhpSimpleDb\QueryBuilder\Exception\UnknownAliasException;
 
-/**
- * Class Manager
- *
- * @package Xicrow\PhpSimpleDb\QueryBuilder
- */
 class Manager
 {
-	/**
-	 * @var QueryBuilderInterface[]
-	 */
-	private $queryBuilders = [];
+	/** @phpstan-var QueryBuilderInterface[] */
+	private array $queryBuilders = [];
 
 	/**
-	 * @param string $alias
-	 * @param array  $config
-	 *
-	 * @return Manager
 	 * @throws UnknownAdapterException
 	 */
 	public function add(string $alias, array $config): Manager
@@ -31,10 +22,8 @@ class Manager
 		], $config);
 
 		$queryBuilder = false;
-		switch (strtolower($config['adapter'])) {
-			case 'mysql':
-				$queryBuilder = new MySQL();
-			break;
+		if (strtolower($config['adapter']) == 'mysql') {
+			$queryBuilder = new MySQL();
 		}
 
 		if (!$queryBuilder) {
@@ -47,9 +36,6 @@ class Manager
 	}
 
 	/**
-	 * @param string $alias
-	 *
-	 * @return QueryBuilderInterface
 	 * @throws UnknownAliasException
 	 */
 	public function get(string $alias): QueryBuilderInterface
@@ -62,9 +48,6 @@ class Manager
 	}
 
 	/**
-	 * @param string $alias
-	 *
-	 * @return Manager
 	 * @throws UnknownAliasException
 	 */
 	public function remove(string $alias): Manager

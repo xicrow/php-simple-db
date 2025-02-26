@@ -1,19 +1,13 @@
 <?php
+declare(strict_types=1);
+
 namespace Xicrow\PhpSimpleDb\QueryBuilder\Adapter;
 
 use Xicrow\PhpSimpleDb\QueryBuilder\QueryBuilderBase;
 
-/**
- * Class MySQL
- *
- * @package Xicrow\PhpSimpleDb\QueryBuilder\Adapter
- */
 class MySQL extends QueryBuilderBase
 {
-	/**
-	 * @inheritdoc
-	 */
-	public function execute()
+	public function execute(): static
 	{
 		$this->sql        = '';
 		$this->parameters = [];
@@ -144,9 +138,6 @@ class MySQL extends QueryBuilderBase
 		return $this;
 	}
 
-	/**
-	 * @inheritdoc
-	 */
 	public function render(): string
 	{
 		$sql = $this->getSql();
@@ -163,12 +154,6 @@ class MySQL extends QueryBuilderBase
 		return $sql;
 	}
 
-	/**
-	 * @param string $prefix
-	 * @param array  $where
-	 *
-	 * @return string
-	 */
 	protected function getWhereArrayAsSql(string $prefix, array $where, string $type = 'AND', int $indent = 0): string
 	{
 		$sql = '';
@@ -217,7 +202,7 @@ class MySQL extends QueryBuilderBase
 					$sql .= $this->escapeField($value);
 				} elseif (is_array($value)) {
 					$comparator = 'IN';
-					if (strpos($field, ' ') !== false) {
+					if (str_contains($field, ' ')) {
 						$tmp        = explode(' ', $field);
 						$field      = array_shift($tmp);
 						$comparator = implode(' ', $tmp);
@@ -237,7 +222,7 @@ class MySQL extends QueryBuilderBase
 					$sql .= $this->escapeField($field) . ' ' . $comparator . ' (' . implode(', ', $placeholders) . ')';
 				} else {
 					$comparator = '=';
-					if (strpos($field, ' ') !== false) {
+					if (str_contains($field, ' ')) {
 						$tmp        = explode(' ', $field);
 						$field      = array_shift($tmp);
 						$comparator = implode(' ', $tmp);
@@ -263,44 +248,30 @@ class MySQL extends QueryBuilderBase
 		return $sql;
 	}
 
-	/**
-	 * @param mixed $value
-	 * @return string
-	 */
-	protected function getPlaceholder($value): string
+	protected function getPlaceholder(mixed $value): string
 	{
 		$placeholder = ':';
 		$placeholder .= substr(gettype($value), 0, 3);
-		$placeholder .= str_pad(count($this->parameters), 4, '0', STR_PAD_LEFT);
+		$placeholder .= str_pad((string)count($this->parameters), 4, '0', STR_PAD_LEFT);
 
 		return $placeholder;
 	}
 
-	/**
-	 * @param string $alias
-	 *
-	 * @return string
-	 */
 	protected function escapeAlias(string $alias): string
 	{
-		if (strpos($alias, '`') === false) {
+		if (!str_contains($alias, '`')) {
 			$alias = '`' . $alias . '`';
 		}
 
 		return $alias;
 	}
 
-	/**
-	 * @param string $field
-	 *
-	 * @return string
-	 */
 	protected function escapeField(string $field): string
 	{
-		if (strpos($field, '`') === false) {
-			if (strpos($field, '.') === false && strpos($field, ' ') === false) {
+		if (!str_contains($field, '`')) {
+			if (!str_contains($field, '.') && !str_contains($field, ' ')) {
 				$field = '`' . $field . '`';
-			} elseif (strpos($field, '.') !== false) {
+			} elseif (str_contains($field, '.')) {
 				if (preg_match_all('#[a-zA-Z0-9_]+\.[a-zA-Z0-9_]+#', $field, $matches)) {
 					foreach ($matches[0] as $match) {
 						$search  = $match;
@@ -314,14 +285,9 @@ class MySQL extends QueryBuilderBase
 		return $field;
 	}
 
-	/**
-	 * @param string $table
-	 *
-	 * @return string
-	 */
 	protected function escapeTable(string $table): string
 	{
-		if (strpos($table, '`') === false) {
+		if (!str_contains($table, '`')) {
 			$table = '`' . $table . '`';
 		}
 

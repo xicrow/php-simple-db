@@ -1,91 +1,33 @@
 <?php
+declare(strict_types=1);
+
 namespace Xicrow\PhpSimpleDb\QueryBuilder;
 
-/**
- * Interface QueryBuilderInterface
- *
- * @package Xicrow\PhpSimpleDb\QueryBuilder
- */
 interface QueryBuilderInterface
 {
-	/**
-	 * @param array $parts
-	 */
 	public function __construct(array $parts = []);
 
-	/**
-	 * @return static
-	 */
-	public function execute();
+	public function execute(): static;
 
-	/**
-	 * @return string
-	 */
 	public function render(): string;
 
-	/**
-	 * @return string
-	 */
 	public function getSql(): string;
 
-	/**
-	 * @return array
-	 */
 	public function getParameters(): array;
 
-	/**
-	 * @param array $selects
-	 *
-	 * @return static
-	 */
-	public function select(array $selects);
+	public function select(array $selects): static;
 
-	/**
-	 * @param array $froms
-	 *
-	 * @return static
-	 */
-	public function from(array $froms);
+	public function from(array $froms): static;
 
-	/**
-	 * @param array $joins
-	 *
-	 * @return static
-	 */
-	public function join(array $joins);
+	public function join(array $joins): static;
 
-	/**
-	 * @param array $wheres
-	 *
-	 * @return static
-	 */
-	public function where(array $wheres);
+	public function where(array $wheres): static;
 
-	/**
-	 * @param array $groups
-	 *
-	 * @return static
-	 */
-	public function group(array $groups);
+	public function group(array $groups): static;
 
-	/**
-	 * @param array $orders
-	 *
-	 * @return static
-	 */
-	public function order(array $orders);
+	public function order(array $orders): static;
 
-	/**
-	 * @param int $offset
-	 *
-	 * @return static
-	 */
-	public function offset(int $offset);
+	public function offset(int $offset): static;
 
-	/**
-	 * @param int $limit
-	 *
-	 * @return static
-	 */
-	public function limit(int $limit);
+	public function limit(int $limit): static;
 }
