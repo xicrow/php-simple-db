@@ -148,7 +148,7 @@ class MySQL extends QueryBuilderBase
 				$value = '"' . addslashes($value) . '"';
 			}
 
-			$sql = str_replace($placeholder, $value, $sql);
+			$sql = str_replace((string)$placeholder, (string)$value, $sql);
 		}
 
 		return $sql;
